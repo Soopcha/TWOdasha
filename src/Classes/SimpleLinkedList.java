@@ -148,15 +148,25 @@ public class SimpleLinkedList<T> implements Iterable<Integer> {
         return getNode(index).value;
     }
 
-    private SimpleLinkedListNode<T> rearrangingElements ( int index1, int index2) { // метод перестановки эл
+    private SimpleLinkedListNode<Integer> rearrangingElements (int index1, int index2) { // метод перестановки эл  НАДО ДОПИСАТЬ
+        //в <> Integer тк мы
         int i = 0;
-        for (SimpleLinkedListNode<T> curr = head; curr != null; curr = curr.next, i++) {
+        for (SimpleLinkedListNode<Integer> curr = head; curr != null; curr = curr.next, i++) {
             if (i == index1) {
                 return curr;
+
+                break;
+            }
+            if (i == index2){
+
+
+                break;
             }
         }
         return null;
     }
+
+
     public void getAnswer() {
         int n = size();
         int maxValue = Integer.MIN_VALUE;
@@ -174,7 +184,7 @@ public class SimpleLinkedList<T> implements Iterable<Integer> {
                 maxValue = value;
                 indexMax = i;
             }
-            rearrangingElements(indexMax,indexMin);
+            //rearrangingElements(indexMax,indexMin);
         }
     }
     //    .\input.txt .\output.txt
