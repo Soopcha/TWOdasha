@@ -60,7 +60,7 @@ public class SimpleLinkedList<T> implements Iterable<Integer> {
         }
     }
 
-    private SimpleLinkedListNode<Integer> getNode(int index) {
+    private SimpleLinkedListNode<Integer> getNode(int index) {//по индексу будет возвращать элемент
         int i = 0;
         for (SimpleLinkedListNode<Integer> curr = head; curr != null; curr = curr.next, i++) {
             if (i == index) {
@@ -147,7 +147,17 @@ public class SimpleLinkedList<T> implements Iterable<Integer> {
         }
         return getNode(index).value;
     }
-    public void getAnswer(){
+
+    private SimpleLinkedListNode<T> rearrangingElements ( int index1, int index2) { // метод перестановки эл
+        int i = 0;
+        for (SimpleLinkedListNode<T> curr = head; curr != null; curr = curr.next, i++) {
+            if (i == index1) {
+                return curr;
+            }
+        }
+        return null;
+    }
+    public void getAnswer() {
         int n = size();
         int maxValue = Integer.MIN_VALUE;
         int indexMax= 0;
@@ -164,7 +174,7 @@ public class SimpleLinkedList<T> implements Iterable<Integer> {
                 maxValue = value;
                 indexMax = i;
             }
-            //
+            rearrangingElements(indexMax,indexMin);
         }
     }
     //    .\input.txt .\output.txt
