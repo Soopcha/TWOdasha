@@ -150,15 +150,16 @@ public class SimpleLinkedList<T> implements Iterable<Integer> {
 
     private SimpleLinkedListNode<Integer> rearrangingElements (int index1, int index2) { // метод перестановки эл  НАДО ДОПИСАТЬ
         //в <> Integer тк мы
+        SimpleLinkedListNode<Integer> curr1Prev;
+        SimpleLinkedListNode<Integer> curr2Prev;
+
         int i = 0;
         for (SimpleLinkedListNode<Integer> curr = head; curr != null; curr = curr.next, i++) {
-            if (i == index1) {
-                return curr;
-
-                break;
+            if (i == index1-1) {
+                curr1Prev = curr;
             }
             if (i == index2){
-
+                curr2Prev = curr;
 
                 break;
             }
