@@ -64,7 +64,7 @@ public class FrameMain extends JFrame {
 
     public FrameMain() throws IOException {
 
-        runTest();
+        //runTest();
 
         this.setTitle("Основная программа");
         this.setContentPane(panelMain);

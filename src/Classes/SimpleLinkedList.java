@@ -1,6 +1,8 @@
 package Classes;
 
 import java.util.Iterator;
+
+import static java.lang.Math.abs;
 /*
 21 (*) В списке целых чисел поменять местами первый элемент, содержащий наименьшее
 значение, с последним элементом, содержащим наибольшее значение. Обратите
@@ -148,44 +150,80 @@ public class SimpleLinkedList<T> implements Iterable<Integer> {
         return getNode(index).value;
     }
 
-    private SimpleLinkedListNode<Integer> rearrangingElements (int index1, int index2) { // метод перестановки эл  НАДО ДОПИСАТЬ
+    private SimpleLinkedListNode<Integer> rearrangingElements (int index1, int index2) { // метод перестановки эл
         //в <> Integer тк мы
-        SimpleLinkedListNode<Integer> curr1Prev;
-        SimpleLinkedListNode<Integer> curr2Prev;
+        int n = size();
+        if (n > 1) { // тк можно переставлять эл только если их 2 и больше
+            SimpleLinkedListNode<Integer> prev1 = null;
+            SimpleLinkedListNode<Integer> prev2 = null;
 
-        int i = 0;
-        for (SimpleLinkedListNode<Integer> curr = head; curr != null; curr = curr.next, i++) {
-            if (i == index1-1) {
-                curr1Prev = curr;
+            SimpleLinkedListNode<Integer> curr1 = null;
+            SimpleLinkedListNode<Integer> curr2 = null;
+
+            SimpleLinkedListNode<Integer> next1 = null;
+            SimpleLinkedListNode<Integer> next2 = null;
+
+            int i = 0;
+            for (SimpleLinkedListNode<Integer> currInTheMoment = head; currInTheMoment != null; currInTheMoment = currInTheMoment.next, i++) {
+                if (i == index1 - 1) {
+                    prev1 = currInTheMoment;
+                }
+                if (i == index2 - 1) {
+                    prev2 = currInTheMoment;
+                }
+
+                if (i == index1) {
+                    curr1 = currInTheMoment;
+                }
+                if (i == index2) {
+                    curr2 = currInTheMoment;
+                }
+
+                if (i == index1 + 1) {
+                    next1 = currInTheMoment;
+                }
+                if (i == index2 + 1) {
+                    next2 = currInTheMoment;
+                }
+
             }
-            if (i == index2){
-                curr2Prev = curr;
 
-                break;
+            if (abs(index1 - index2) > 1) {
+                prev1.next = curr2;
+                prev2.next = curr1; // тут пошло зацикливание тк я наверно не новый эл создала а ссыль и из - за милион эл с валуе 1 у меня ошибка памяти
+                // ещё зацикливание тк  prev2  == curr1 и следовательно curr1 всегда вызывает некстом себя же
+                // те если заменяемые члены не рядом то прога работает
+                curr1.next = next2;
+                curr2.next = next1;
+            } else { //если эл для перестановки рядом то
+
             }
         }
+
         return null;
     }
 
 
-    public void getAnswer() {
+    public void getAnswer() { //метод - основная логика моего таска (ну и метод rearrangingElements для неё пришлось создать)
         int n = size();
-        int maxValue = Integer.MIN_VALUE;
-        int indexMax= 0;
+        if (n > 1) {
+            int maxValue = Integer.MIN_VALUE;
+            int indexMax = 0;
 
-        int minValue = Integer.MAX_VALUE;
-        int indexMin= 0;
-        for (int i = 1; i < n; ++i) {
-            int value = getNode(i).value;
-            if( value < minValue){
-                minValue = value;
-                indexMin = i;
+            int minValue = Integer.MAX_VALUE;
+            int indexMin = 0;
+            for (int i = 1; i < n; ++i) {
+                int value = getNode(i).value;
+                if (value < minValue) {
+                    minValue = value;
+                    indexMin = i;
+                }
+                if (value >= maxValue) {
+                    maxValue = value;
+                    indexMax = i;
+                }
             }
-            if( value >= maxValue){
-                maxValue = value;
-                indexMax = i;
-            }
-            //rearrangingElements(indexMax,indexMin);
+            rearrangingElements(indexMax, indexMin);
         }
     }
     //    .\input.txt .\output.txt

@@ -29,7 +29,7 @@ public class MainLogic {
         return answer.toString();
     }
     public static void readAndWriteMethod(InputArgs inputArgs) throws IOException {
-        SimpleLinkedList<Integer> arr = ClassesForInAndOut.readFile(inputArgs.getInputFile());
+        SimpleLinkedList<Integer> arr = ClassesForInAndOut.readFile(inputArgs.getInputFile()); //создали наш лист односвязанный
         arr.getAnswer();
         String answer = MainLogic.massivVStroki(arr);
         ClassesForInAndOut.writeFile(inputArgs.getOutputFile(),answer);
