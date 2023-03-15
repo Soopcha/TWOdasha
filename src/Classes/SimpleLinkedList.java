@@ -189,14 +189,30 @@ public class SimpleLinkedList<T> implements Iterable<Integer> {
             }
 
             if (abs(index1 - index2) > 1) {
-                prev1.next = curr2;
-                prev2.next = curr1; // тут пошло зацикливание тк я наверно не новый эл создала а ссыль и из - за милион эл с валуе 1 у меня ошибка памяти
+                if (prev1 != null) {
+                    prev1.next = curr2;
+                }
+                if (prev2 != null) {
+                    prev2.next = curr1;
+                }// тут пошло зацикливание тк я наверно не новый эл создала а ссыль и из - за милион эл с валуе 1 у меня ошибка памяти
                 // ещё зацикливание тк  prev2  == curr1 и следовательно curr1 всегда вызывает некстом себя же
                 // те если заменяемые члены не рядом то прога работает
                 curr1.next = next2;
                 curr2.next = next1;
             } else { //если эл для перестановки рядом то
-
+                if (index1 < index2){
+                    if (prev1 != null) {
+                        prev1.next = curr2;
+                    }
+                    curr2.next = curr1;
+                    curr1.next = next2;
+                } else {
+                    if (prev2 != null) {
+                        prev2.next = curr1;
+                    }
+                    curr1.next = curr2;
+                    curr2.next = next1;
+                }
             }
         }
 
@@ -212,7 +228,7 @@ public class SimpleLinkedList<T> implements Iterable<Integer> {
 
             int minValue = Integer.MAX_VALUE;
             int indexMin = 0;
-            for (int i = 1; i < n; ++i) {
+            for (int i = 0; i < n; ++i) {
                 int value = getNode(i).value;
                 if (value < minValue) {
                     minValue = value;
