@@ -150,7 +150,7 @@ public class SimpleLinkedList<T> implements Iterable<Integer> {
         return getNode(index).value;
     }
 
-    private SimpleLinkedListNode<Integer> rearrangingElements (int index1, int index2) { // метод перестановки эл
+    private SimpleLinkedListNode<Integer> rearrangingElements(int index1, int index2) { // метод перестановки эл (эл нумеруются с 0)
         //в <> Integer тк мы
         int n = size();
         if (n > 1) { // тк можно переставлять эл только если их 2 и больше
@@ -163,8 +163,59 @@ public class SimpleLinkedList<T> implements Iterable<Integer> {
             SimpleLinkedListNode<Integer> next1 = null;
             SimpleLinkedListNode<Integer> next2 = null;
 
+            /*
             int i = 0;
             for (SimpleLinkedListNode<Integer> currInTheMoment = head; currInTheMoment != null; currInTheMoment = currInTheMoment.next, i++) {
+                if (i == index1 - 1) {
+                    prev1 = currInTheMoment;
+                }
+                if (i == index2 - 1) {
+                    prev2 = currInTheMoment;
+                }
+            }
+            curr1 = prev1.next;
+            curr2 = prev2.next;
+
+            if (abs(index1 - index2) > 1) {
+                prev1.next = prev1.next.next;
+                prev2.next = prev2.next.next;
+
+                curr1.next = prev2.next;
+                curr2.next = prev1.next;
+
+                prev1.next = curr2;
+                prev2.next = curr1;
+            } else { //если эл для перестановки рядом то
+                if (index1 < index2){
+                    if (prev1 != null) {
+                        prev1.next = curr2;
+                    }
+                    curr2.next = curr1;
+                    curr1.next = next2;
+                } else {
+                    if (prev2 != null) {
+                        prev2.next = curr1;
+                    }
+                    curr1.next = curr2;
+                    curr2.next = next1;
+                }
+            }
+            */
+
+
+            int i = 0;
+            for (SimpleLinkedListNode<Integer> currInTheMoment = head; currInTheMoment != null; currInTheMoment = currInTheMoment.next, i++) {
+                /* Пыталась как-то улучшить(уменьшить код, но это тоже надо доработать и не факт что в итоге строк меньше будет)
+                if ((index1 == i && i == 0 )|| (index2 == i && i == 0)){
+                    if (index1 == 0){
+                        curr1 = currInTheMoment;
+                        next1 = currInTheMoment.next;
+                    }
+                    if (index2 == 0){
+                        curr2 = currInTheMoment;
+                        next2 = currInTheMoment.next;
+                    }
+                } else {*/
                 if (i == index1 - 1) {
                     prev1 = currInTheMoment;
                 }
@@ -186,21 +237,28 @@ public class SimpleLinkedList<T> implements Iterable<Integer> {
                     next2 = currInTheMoment;
                 }
 
+
             }
 
             if (abs(index1 - index2) > 1) {
                 if (prev1 != null) {
                     prev1.next = curr2;
+                } else {
+                    head = curr2;
                 }
-                if (prev2 != null) {
+                if (prev2 != null) { //те тут нет prev2 те prev2 = null
                     prev2.next = curr1;
+                } else {
+                    head = curr1;
                 }// тут пошло зацикливание тк я наверно не новый эл создала а ссыль и из - за милион эл с валуе 1 у меня ошибка памяти
+
                 // ещё зацикливание тк  prev2  == curr1 и следовательно curr1 всегда вызывает некстом себя же
                 // те если заменяемые члены не рядом то прога работает
                 curr1.next = next2;
                 curr2.next = next1;
+
             } else { //если эл для перестановки рядом то
-                if (index1 < index2){
+                if (index1 < index2) {
                     if (prev1 != null) {
                         prev1.next = curr2;
                     }
@@ -215,6 +273,7 @@ public class SimpleLinkedList<T> implements Iterable<Integer> {
                 }
             }
         }
+
 
         return null;
     }
